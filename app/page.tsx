@@ -1,113 +1,118 @@
-import Image from 'next/image'
+import { revalidatePath } from "next/cache";
+import { getSecret } from "@/utils/azKeyVault";
 
-export default function Home() {
+let cityLocation: String[] = [];
+let cityCurrent: String[] = [];
+let myApiKey: String = "";
+
+async function getData(formData: FormData) {
+  "use server";
+
+  const apiKey = await getSecret("weather-api-key") as String;
+  myApiKey = apiKey;
+
+  const city = formData.get("city") as String; 
+
+  const url =
+    "http://api.weatherapi.com/v1/current.json?key=" +
+    myApiKey +
+    "&q=" +
+    city +
+    "&aqi=yes";
+
+  const res = await fetch(url, {
+    method: "GET",
+    mode: "cors",
+    next: {
+      revalidate: 0,
+    },
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  // Recommendation: handle errors
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error("Failed to fetch data");
+  }
+
+  const obj = await res.json();
+
+  // get the city location, region, country...
+  // reset the array
+  cityLocation = [];
+  cityLocation.push("location: " + obj.location.name);
+  cityLocation.push("region: " + obj.location.region);
+  cityLocation.push("country: " + obj.location.country);
+  cityLocation.push("lat: " + obj.location.lat);
+  cityLocation.push("lon: " + obj.location.lon);
+  cityLocation.push("tz_id: " + obj.location.tz_id);
+  cityLocation.push("localtime: " + obj.location.localtime);
+  cityLocation.push("localtime_epoch: " + obj.location.localtime_epoch);
+  cityLocation.push("utc_offset: " + obj.location.utc_offset);
+
+  // get the current weather conditions in american units
+  // reset the array
+  cityCurrent = [];
+  cityCurrent.push(" temperature: " + obj.current.temp_f + " F");
+  cityCurrent.push(" feels like: " + obj.current.feelslike_f + " F");
+  cityCurrent.push(" wind speed: " + obj.current.wind_mph + " mph");
+  cityCurrent.push(" wind direction: " + obj.current.wind_dir);
+  cityCurrent.push(" wind gust: " + obj.current.gust_mph + " mph");
+  cityCurrent.push(" pressure: " + obj.current.pressure_in + " in");
+  cityCurrent.push(" humidity: " + obj.current.humidity + " %");
+  cityCurrent.push(" cloud cover: " + obj.current.cloud + " %");
+  cityCurrent.push(" uv index: " + obj.current.uv);
+  cityCurrent.push(" visibility: " + obj.current.vis_miles + " miles");
+  cityCurrent.push(" precipitation: " + obj.current.precip_in + " in");
+  cityCurrent.push(" dew point: " + obj.current.dewpoint_f + " F");
+  cityCurrent.push(" condition: " + obj.current.condition.text);
+
+  revalidatePath("/weather");
+}
+
+export default function Page() {
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+    <main className=' flex flex-row  text-stone-100'>
+      <div className=" flex flex-col gap-10 w-1/2 items-center content-center justify-center ">
+        {/* first name form */}
+        <form
+          action={getData}
+          className="flex flex-col bg-gray-700 max-h-52 p-4 border-4 text-stone-100 gap-4"
+        >
+          <label className=' block'>
+            <span className="block text-sm font-medium text-stone-100">City Name</span>
+            <input
+              className=" bg-slate-300 text-black hover:bg-slate-100 active:bg-white focus:ring focus:ring-blue-500"
+              type="text" name="city"
             />
-          </a>
-        </div>
+          </label>
+          <button
+            className=" border border-blue-500 w-24 h-7 bg-gray-700 hover:bg-gray-800 text-stone-100 rounded-md"
+            type="submit"
+          >Submit</button>
+        </form>
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <div className=" bg-black text-green-500 border-double border-8 border-gray-700 w-1/2 pl-6 h-[calc(100vh-96px)] overflow-auto">
+        <div className="text-2xl font-bold text-center  text-amber-200">City Information</div>
+        <br />
+        <div className="text-xl font-bold mb-1 text-amber-200 ">Location</div>
+        <ul>
+          {cityLocation.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+        <br />
+        <div className="text-xl font-bold mb-1  text-amber-200 ">Current Weather</div>
+        <ul>
+          {cityCurrent.map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
       </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      apikey: {myApiKey}
     </main>
-  )
+  );
 }
