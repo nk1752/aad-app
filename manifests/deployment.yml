@@ -20,7 +20,7 @@ spec:
         #  nodepool: userpool
         containers:
         - name: aad-app
-          image: vhacr1.azurecr.io/appdir-prisma:latest
+          image: vhacr1.azurecr.io/aad-app:latest
           resources:
             requests:
               memory: "128Mi"
