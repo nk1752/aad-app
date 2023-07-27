@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: aad-app-ingress
+  labels:
+    name: aad-app-ingress
+  namespace: aad-app
+  annotations:
+    kubernetes.io/ingress.class: azure/application-gateway
+    appgw.ingress.kubernetes.io/health-probe-path: /
+    appgw.ingress.kubernetes.io/health-probe-interval: "10s"
+    appgw.ingress.kubernetes.io/health-probe-timeout: "10s"
+    appgw.ingress.kubernetes.io/health-probe-initial-delay: "10s"
+    appgw.ingress.kubernetes.io/health-probe-protocol: "HTTP"
+    appgw.ingress.kubernetes.io/health-probe-port: "3000"
+    # appgw.ingress.kubernetes.io/ssl-redirect: "true"
+
+spec:
+  rules:
+  - host: pocvivahealth.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: aad-app-service
+            port: 
+              number: 3000

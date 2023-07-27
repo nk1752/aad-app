@@ -8,7 +8,7 @@ let myApiKey: String = "";
 async function getData(formData: FormData) {
   "use server";
 
-  const apiKey = await getSecret("weather-api-key") as String;
+  const apiKey = await getSecret("w-api-key") as String;
   myApiKey = apiKey;
 
   const city = formData.get("city") as String; 

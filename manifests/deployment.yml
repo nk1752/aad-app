@@ -1,0 +1,32 @@
+# deploy to usernode pool
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aad-app-deployment
+  namespace: aad-app
+  labels:
+    app: aad-app
+spec:
+    replicas: 2
+    selector:
+      matchLabels:
+        app: aad-app
+    template:
+      metadata:
+        labels:
+          app: aad-app
+      spec:
+        # nodeSelector:
+        #  nodepool: userpool
+        containers:
+        - name: aad-app
+          image: vhacr1.azurecr.io/appdir-prisma:latest
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "500m"
+            limits:
+                memory: "256Mi"
+                cpu: "1000m"
+          ports:
+          - containerPort: 3000

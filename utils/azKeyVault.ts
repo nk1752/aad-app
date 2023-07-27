@@ -12,11 +12,9 @@ import { log } from "console";
 
 export async function getSecret(name: string) {
 
-    const client_id = process.env.CLIENT_ID;  // Managed Identity Client ID
-    const credential = new DefaultAzureCredential({
-        managedIdentityClientId: client_id
-    });
-    const vaultName = "mi-rsc-vault";
+    const client_id = process.env.UMI_CLIENT_ID;  // Managed Identity Client ID
+    const credential = new DefaultAzureCredential();
+    const vaultName = process.env.SECRET_VAULT_NAME;
     const vaultUrl = `https://${vaultName}.vault.azure.net`;
 
     const client = new SecretClient(vaultUrl, credential, {

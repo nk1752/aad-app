@@ -1,0 +1,28 @@
+az aks get-credentials -n MyManagedCluster -g MyResourceGroup
+
+alias k=kubectl
+alias kg='kubectl get'
+alias kgpo='kubectl get pod'
+
+kubectl apply -f ./my-manifest.yaml            # create resource(s)
+kubectl apply -f ./dir                         # create resource(s) in all manifest files in dir
+
+kubectl config view # Show Merged kubeconfig settings.
+
+
+https://phoenixnap.com/kb/kubectl-commands-cheat-sheet
+kubectl get namespaces
+kubectl get pods
+kubectl get pods -o wide
+kubectl get pods --show-labels
+kubectl get pods --field-selector=spec.nodeName=[server-name]
+kubectl get daemonset
+
+kubectl describe svc myService
+kubectl get service -A
+
+docker build . -t aad-app -f ./dockerfiles/Dockerfile.prod --no-cache
+docker run -p 3000:3000 aad-app
+
+az account list
+az account clear //logout all users
