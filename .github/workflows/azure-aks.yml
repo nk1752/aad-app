@@ -53,8 +53,6 @@ jobs:
           echo SECRET_VAULT_NAME=${{secrets.SECRET_VAULT_NAME}} >> .env.production.local
           echo UMI_CLIENT_ID=${{secrets.AZURE_CLIENT_ID}} >> .env.production.local
           
-      - name: Print env file
-        run: cat .env.production
       - name: directory listing
         run: ls -la
 
