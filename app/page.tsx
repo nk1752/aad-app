@@ -112,7 +112,6 @@ export default function Page() {
           ))}
         </ul>
       </div>
-      apikey: {myApiKey}
     </main>
   );
 }
