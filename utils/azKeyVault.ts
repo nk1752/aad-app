@@ -13,7 +13,18 @@ import { log } from "console";
 export async function getSecret(name: string) {
 
     const client_id = process.env.UMI_CLIENT_ID;  // Managed Identity Client ID
-    const credential = new DefaultAzureCredential();
+    
+    // environment variables
+    const credential = new DefaultAzureCredential({
+        managedIdentityClientId: client_id,
+    });
+
+    // system-assigned managed identity
+    //const credential = new ManagedIdentityCredential();
+
+    // user-assigned managed identity
+    //const credential = new ManagedIdentityCredential(client_id);
+
     const vaultName = process.env.SECRET_VAULT_NAME;
     const vaultUrl = `https://${vaultName}.vault.azure.net`;
 

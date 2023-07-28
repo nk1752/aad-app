@@ -22,11 +22,13 @@ spec:
         - name: aad-app
           image: vhacr1.azurecr.io/aad-app:latest
           resources:
+            # 128Mi bytes of memory and 250 millicpu (1/4 cpu core)
             requests:
               memory: "128Mi"
               cpu: "250m"
+            # 256Mi bytes of memory and 500 millicpu (1/2 cpu core)
             limits:
                 memory: "256Mi"
-                cpu: "1000m"
+                cpu: "500m"
           ports:
           - containerPort: 3000
