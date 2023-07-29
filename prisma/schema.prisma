@@ -1,5 +1,6 @@
 generator client {
   provider = "prisma-client-js"
+  // >>>> binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -7,16 +8,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Address {
-  id        Int      @id @default(autoincrement())
-  street    String   @db.VarChar(255)
-  city      String   @db.VarChar(255)
-  zipCode   String   @db.VarChar(255)
-  county    String?  @db.VarChar(255)
-  state     String   @db.VarChar(255)
-  createdAt DateTime @default(now())
-  updatedAt DateTime
-  Member    Member?
+model user1 {
+  id         Int    @id(map: "PK_user1") @default(autoincrement())
+  first_name String @db.VarChar(255)
+  last_name  String @db.VarChar(255)
+  account_id Int
 }
 
 model Member {
@@ -33,9 +29,18 @@ model Member {
   Address   Address  @relation(fields: [addressId], references: [id])
 }
 
-model user1 {
-  id         Int    @id(map: "PK_user1") @default(autoincrement())
-  first_name String @db.VarChar(255)
-  last_name  String @db.VarChar(255)
-  account_id Int
+model Address {
+  id        Int      @id @default(autoincrement())
+  street    String   @db.VarChar(255)
+  city      String   @db.VarChar(255)
+  zipCode   String   @db.VarChar(255)
+  county    String?  @db.VarChar(255)
+  state     String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  Member    Member?
 }
+
+
+
+
