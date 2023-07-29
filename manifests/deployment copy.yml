@@ -25,6 +25,16 @@ spec:
           # set image PullPolicy to Always to ensure that the latest image is pulled on deployment
           imagePullPolicy: Always
           
+          securityContext:
+            readonlyRootFilesystem: true
+            runAsUser: 1001
+            runAsGroup: 1001
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+              - ALL
+          #  seLinuxOptions:
+
           resources:
             # 128Mi bytes of memory and 250 millicpu (1/4 cpu core)
             requests:
