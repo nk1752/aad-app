@@ -21,8 +21,7 @@ export default function IdPage() {
         id: id
       },
       include: {
-        
-        
+        address: true,
       }
     })
 
@@ -35,7 +34,9 @@ export default function IdPage() {
       display.push("last name: " + data.lastName);
       display.push("phone: " + data.phone);
       display.push("email: " + data.email);
-     
+      display.push("street: " + data.address.street);
+      display.push("city: " + data.address.city);
+      display.push("state: " + data.address.state);
       display.push("______________________________________ ");
     }
 
@@ -69,7 +70,7 @@ export default function IdPage() {
         ]
       },
       include: {
-       
+        address: true
       }
     })
 
@@ -86,7 +87,9 @@ export default function IdPage() {
       display.push("last name: " + data[i].lastName);
       display.push("phone: " + data[i].phone);
       display.push("email: " + data[i].email);
-      
+      display.push("street: " + data[i].address.street);
+      display.push("city: " + data[i].address.city);
+      display.push("state: " + data[i].address.state);
       display.push("______________________________________ ");
     } // end for
   

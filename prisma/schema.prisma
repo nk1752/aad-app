@@ -1,6 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
-  // >>>> binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
@@ -21,12 +21,12 @@ model Member {
   lastName  String   @db.VarChar(255)
   email     String   @db.VarChar(255)
   phone     String   @db.VarChar(255)
-  age       Int
+  age       Int      @db.Int
   plan      String   @db.VarChar(255)
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @updatedAt
   addressId Int      @unique
-  Address   Address  @relation(fields: [addressId], references: [id])
+  address   Address  @relation(fields: [addressId], references: [id])
 }
 
 model Address {
@@ -37,10 +37,6 @@ model Address {
   county    String?  @db.VarChar(255)
   state     String   @db.VarChar(255)
   createdAt DateTime @default(now())
-  updatedAt DateTime
-  Member    Member?
+  updatedAt DateTime @updatedAt
+  member    Member?
 }
-
-
-
-
