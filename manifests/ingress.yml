@@ -21,7 +21,7 @@ spec:
     http:
       paths:
       - pathType: Prefix
-        path: /aad-app
+        path: /
         backend:
           service:
             name: aad-app-service
