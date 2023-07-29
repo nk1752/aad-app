@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model Address {
+  id        Int      @id @default(autoincrement())
+  street    String   @db.VarChar(255)
+  city      String   @db.VarChar(255)
+  zipCode   String   @db.VarChar(255)
+  county    String?  @db.VarChar(255)
+  state     String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  Member    Member?
+}
+
+model Member {
+  id        Int      @id @default(autoincrement())
+  firstName String   @db.VarChar(255)
+  lastName  String   @db.VarChar(255)
+  email     String   @db.VarChar(255)
+  phone     String   @db.VarChar(255)
+  age       Int
+  plan      String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  addressId Int      @unique
+  Address   Address  @relation(fields: [addressId], references: [id])
+}
+
+model user1 {
+  id         Int    @id(map: "PK_user1") @default(autoincrement())
+  first_name String @db.VarChar(255)
+  last_name  String @db.VarChar(255)
+  account_id Int
+}

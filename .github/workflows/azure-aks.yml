@@ -71,7 +71,7 @@ jobs:
           --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }} \
           --registry ${{ env.AZURE_CONTAINER_REGISTRY }} \
           -g ${{ env.RESOURCE_GROUP }} \
-          -f ./dockerfiles/Dockerfile.prod .
+          -f ./dockerfiles/Dockerfile.prisma .
           
 
   deploy:
