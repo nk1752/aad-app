@@ -21,7 +21,7 @@ kubectl get daemonset
 kubectl describe svc myService
 kubectl get service -A
 
-docker build . -t aad-app -f ./dockerfiles/Dockerfile.prod --no-cache
+docker build . -t aad-app -f ./dockerfiles/Dockerfile.prisma --no-cache
 docker run -p 3000:3000 aad-app
 
 az account list

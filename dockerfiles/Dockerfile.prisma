@@ -8,7 +8,7 @@ WORKDIR /app
 
 # Install dependencies
 COPY package*.json ./
-COPY prisma ./
+COPY prisma ./prisma
 
 # --omit=dev will skip devDependencies
 RUN npm ci 
@@ -17,6 +17,7 @@ RUN npm ci
 FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/prisma ./prisma
 RUN npx prisma generate
 COPY ./ ./
 
