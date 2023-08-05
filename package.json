@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@azure/identity": "^3.2.4",
+    "@azure/keyvault-keys": "^4.7.1",
     "@azure/keyvault-secrets": "^4.7.0",
     "@ngneat/falso": "^7.0.1",
     "@prisma/client": "^5.0.0",

@@ -9,13 +9,13 @@ async function getData(formData: FormData) {
   "use server";
 
   const apiKey = await getSecret("w-api-key") as String;
-  myApiKey = apiKey;
+ console.log(apiKey);
 
   const city = formData.get("city") as String; 
 
   const url =
     "http://api.weatherapi.com/v1/current.json?key=" +
-    myApiKey +
+    apiKey +
     "&q=" +
     city +
     "&aqi=yes";
