@@ -2,24 +2,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: aad-app-deployment
-  namespace: aad-app
+  name: ap-app-deployment
+  namespace: ap-app
   labels:
-    app: aad-app
+    app: ap-app
 spec:
     replicas: 2
     selector:
       matchLabels:
-        app: aad-app
+        app: ap-app
     template:
       metadata:
         labels:
-          app: aad-app
+          app: ap-app
       spec:
         # nodeSelector:
         #  nodepool: userpool
         containers:
-        - name: aad-app
+        - name: ap-app
           # Replace 1.0.0 with the version of your application that you are building
           image: vhacr1.azurecr.io/aad-app:latest
           # set image PullPolicy to Always to ensure that the latest image is pulled on deployment
