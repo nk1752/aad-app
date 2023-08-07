@@ -4,14 +4,14 @@ on:
   workflow_dispatch:
 
 env:
-  ACR_RESOURCE_GROUP: aad-rg
+  ACR_RESOURCE_GROUP: ap-rg
   AZURE_CONTAINER_REGISTRY: vhacr1
-  CLUSTER_NAME: aad-cluster
+  CLUSTER_NAME: ap-cluster
   CLUSTER_RESOURCE_GROUP: aad-rg
-  RESOURCE_GROUP: aad-rg
-  CONTAINER_NAME: aad-app
+  RESOURCE_GROUP: ap-rg
+  CONTAINER_NAME: ap-app
   CONTAINER_TAG: ${{ github.sha }}
-  NAMESPACE: aad-app
+  NAMESPACE: ap-app
   NODE_ENV: production
   PLATFORM: aks
 
