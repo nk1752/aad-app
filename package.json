@@ -12,6 +12,8 @@
     "@azure/identity": "^3.2.4",
     "@azure/keyvault-keys": "^4.7.1",
     "@azure/keyvault-secrets": "^4.7.0",
+    "@azure/msal-browser": "^3.0.1",
+    "@azure/msal-react": "^2.0.1",
     "@ngneat/falso": "^7.0.1",
     "@prisma/client": "^5.0.0",
     "@types/node": "20.4.5",

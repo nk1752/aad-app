@@ -1,13 +1,49 @@
+'use client'
 import './globals.css'
 import type { Metadata } from 'next'
 
-import Topbar from './components/topbar'
+import { MsalProvider, AuthenticatedTemplate, UnauthenticatedTemplate } from '@azure/msal-react'
+import { PublicClientApplication, Configuration, EventType, EventMessage } from '@azure/msal-browser'
 
+import Topbar from './components/topbar'
+import LoginSplash from './components/loginSplash'
 
 export const metadata: Metadata = {
   title: 'RSC | AAD | Prisma',
   description: 'RSC, Prisma ORM, and AAD',
 }
+
+// MSAL configuration
+const msalConfig: Configuration = {
+  auth: {
+    clientId: 'ddec4f98-52aa-40b2-801e-31531e319288',
+    authority: 'https://login.microsoftonline.com/7cb752a7-6dfd-429e-adc9-129f0ea3fcec',
+    redirectUri: 'http://localhost:3000',
+  },
+};
+
+// MSAL instance
+const pca = new PublicClientApplication(msalConfig);
+
+const callbackId = pca.addEventCallback((message: EventMessage) => {
+  
+  if (message.eventType === EventType.LOGIN_SUCCESS) {
+    console.log('*** LOGIN_SUCCESS ***');
+    console.log('message: ', message);
+  }
+  else if (message.eventType === EventType.LOGOUT_END) {
+    console.log('*** LOGOUT_END ***');
+    console.log('message: ', message);
+  }
+    
+  
+
+});
+
+const loginRequest = {
+  scopes: ['User.Read']
+};
+
 
 export default function RootLayout({
   children,
@@ -16,12 +52,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-        <body className="bg-gradient-to-r from-gray-900 to-gray-700 text-stone-100 ">  
+      <body className="bg-gradient-to-r from-gray-900 to-gray-700 text-stone-100 ">
+        <MsalProvider instance={pca}>
           <main >
-              <Topbar />
+            <Topbar />
+            <AuthenticatedTemplate>
               {children}
+            </AuthenticatedTemplate>
+            <UnauthenticatedTemplate>
+              <LoginSplash />
+            </UnauthenticatedTemplate>
           </main>
-        </body>
+        </MsalProvider>
+      </body>
     </html>
   )
 }
