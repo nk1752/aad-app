@@ -8,7 +8,7 @@ import { PublicClientApplication, Configuration, EventType, EventMessage } from 
 import Topbar from './components/topbar'
 import LoginSplash from './components/loginSplash'
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
   title: 'RSC | AAD | Prisma',
   description: 'RSC, Prisma ORM, and AAD',
 }
@@ -24,25 +24,6 @@ const msalConfig: Configuration = {
 
 // MSAL instance
 const pca = new PublicClientApplication(msalConfig);
-
-const callbackId = pca.addEventCallback((message: EventMessage) => {
-  
-  if (message.eventType === EventType.LOGIN_SUCCESS) {
-    console.log('*** LOGIN_SUCCESS ***');
-    console.log('message: ', message);
-  }
-  else if (message.eventType === EventType.LOGOUT_END) {
-    console.log('*** LOGOUT_END ***');
-    console.log('message: ', message);
-  }
-    
-  
-
-});
-
-const loginRequest = {
-  scopes: ['User.Read']
-};
 
 
 export default function RootLayout({
