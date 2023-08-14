@@ -1,10 +1,10 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ap-app-ingress
+  name: aad-app-ingress
   labels:
-    name: ap-app-ingress
-  namespace: ap-app
+    name: aad-app-ingress
+  namespace: aad-app
   annotations:
     kubernetes.io/ingress.class: azure/application-gateway
 
@@ -36,6 +36,6 @@ spec:
         path: /
         backend:
           service:
-            name: ap-app-service
+            name: aad-app-service
             port: 
               number: 3000
