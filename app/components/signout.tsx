@@ -10,7 +10,7 @@ export default function Signout() {
         if (accounts.length > 0) {
             setStatus("Sign Out");
         } else {
-            setStatus("Sign In");
+            setStatus("");
         }
     }, [accounts]);
 
