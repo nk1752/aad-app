@@ -13,16 +13,13 @@ const metadata: Metadata = {
   title: 'RSC | AAD | Prisma',
   description: 'RSC, Prisma ORM, and AAD',
 }
-async function getData() {
-  
-  const apiKey = await getSecret("msal-client-id") as String;
-}
+
 
 // MSAL configuration
 const msalConfig: Configuration = {
   auth: {
     clientId: 'ddec4f98-52aa-40b2-801e-31531e319288',
-    authority: 'https://login.microsoftonline.com/${{ process.env.TENANT_ID }}',
+    authority: 'https://login.microsoftonline.com/7cb752a7-6dfd-429e-adc9-129f0ea3fcec',
     redirectUri: '/',
   },
 };
