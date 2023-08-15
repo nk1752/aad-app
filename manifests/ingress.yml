@@ -17,7 +17,7 @@ metadata:
     appgw.ingress.kubernetes.io/health-probe-port: "3000"
 
     # ssl redirect
-    # appgw.ingress.kubernetes.io/ssl-redirect: "true"
+    appgw.ingress.kubernetes.io/ssl-redirect: "true"
     # ssl certificate
     # appgw.ingress.kubernetes.io/appgw-ssl-certificate: "gs-cert-1"
     
