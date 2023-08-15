@@ -17,7 +17,7 @@ env:
   SQLSERVER: "sqlserver://vhpocdqlsrv.database.windows.net:1433;"
   DB: "database=userdb;"
   USER: "user=vhadmin@vhpocdqlsrv;"
-  NK: "password=nkDevOps23;"
+  NK: "password=${{secrets.DB_PWD}};"
   ENCRYPT: "encrypt=true;"
   SERVER_CERT: "trustServerCertificate=false;"
   HOST_CERT: "hostNameInCertificate=*.database.windows.net;"
