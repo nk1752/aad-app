@@ -15,7 +15,6 @@ env:
   NODE_ENV: production
   PLATFORM: aks
 
-
 jobs:
 
   github_variables:
@@ -52,6 +51,12 @@ jobs:
           echo AZURE_CLIENT_SECRET=${{secrets.AZURE_CLIENT_SECRET}} >> .env.production.local
           echo SECRET_VAULT_NAME=${{secrets.SECRET_VAULT_NAME}} >> .env.production.local
           echo UMI_CLIENT_ID=${{secrets.UMI_CLIENT_ID}} >> .env.production.local
+          echo DATABASE_URL="sqlserver://vhpocdqlsrv.database.windows.net:1433; >> .env.production.local
+          database=userdb;user=vhadmin@vhpocdqlsrv; >> .env.production.local
+          password=nkDevOps23;encrypt=true;trustServerCertificate=false; >> .env.production.local
+          hostNameInCertificate=*.database.windows.net;loginTimeout=30; >> .env.production.local
+
+
           
           
       - name: directory listing
