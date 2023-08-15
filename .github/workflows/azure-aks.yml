@@ -22,6 +22,7 @@ env:
   SERVER_CERT: trustServerCertificate=false;
   HOST_CERT: hostNameInCertificate=*.database.windows.net;
   LOGIN_TIMEOUT: loginTimeout=30;
+  DATABASE_URL: $SQLSERVER + $DB + $USER + $PWD + $ENCRYPT + $SERVER_CERT + $HOST_CERT + $LOGIN_TIMEOUT
 
 
 
@@ -62,7 +63,7 @@ jobs:
           echo AZURE_CLIENT_SECRET=${{secrets.AZURE_CLIENT_SECRET}} >> .env.production.local
           echo SECRET_VAULT_NAME=${{secrets.SECRET_VAULT_NAME}} >> .env.production.local
           echo UMI_CLIENT_ID=${{secrets.UMI_CLIENT_ID}} >> .env.production.local
-          echo DATABASE_URL=${{env.SQLSERVER}}${{env.DB}}${{env.USER}}${{env.PWD}}${{env.ENCRYPT}}${{env.SERVER_CERT}}${{env.HOST_CERT}}${{env.LOGIN_TIMEOUT}} >> .env.production.local
+          echo DATABASE_URL=${{env.DATABASE_URL}}>> .env.production.local
 
 
           
