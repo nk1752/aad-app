@@ -14,6 +14,17 @@ env:
   NAMESPACE: aad-app
   NODE_ENV: production
   PLATFORM: aks
+  SQLSERVER: sqlserver://vhpocdqlsrv.database.windows.net:1433;
+  DB: database=userdb;
+  USER: user=vhadmin@vhpocdqlsrv;
+  PWD: password=nkDevOps23;
+  ENCRYPT: encrypt=true;
+  SERVER_CERT: trustServerCertificate=false;
+  HOST_CERT: hostNameInCertificate=*.database.windows.net;
+  LOGIN_TIMEOUT: loginTimeout=30;
+
+
+
 
 jobs:
 
@@ -51,10 +62,7 @@ jobs:
           echo AZURE_CLIENT_SECRET=${{secrets.AZURE_CLIENT_SECRET}} >> .env.production.local
           echo SECRET_VAULT_NAME=${{secrets.SECRET_VAULT_NAME}} >> .env.production.local
           echo UMI_CLIENT_ID=${{secrets.UMI_CLIENT_ID}} >> .env.production.local
-          echo DATABASE_URL=sqlserver://vhpocdqlsrv.database.windows.net:1433; 
-          database=userdb;user=vhadmin@vhpocdqlsrv; 
-          password=nkDevOps23;encrypt=true;trustServerCertificate=false; 
-          hostNameInCertificate=*.database.windows.net;loginTimeout=30; >> .env.production.local
+          echo DATABASE_URL=${{env.SQLSERVER}}${{env.DB}}${{env.USER}}${{env.PWD}}${{env.ENCRYPT}}${{env.SERVER_CERT}}${{env.HOST_CERT}}${{env.LOGIN_TIMEOUT}} >> .env.production.local
 
 
           

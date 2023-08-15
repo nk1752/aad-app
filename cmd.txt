@@ -18,6 +18,8 @@ kubectl get pods --show-labels
 kubectl get pods --field-selector=spec.nodeName=[server-name]
 kubectl get daemonset
 
+kubectl exec -it <pod_name> -c <container_name> — /bin/bash
+
 kubectl describe svc myService
 kubectl get service -A
 
