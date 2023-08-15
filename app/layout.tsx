@@ -14,7 +14,6 @@ const metadata: Metadata = {
   description: 'RSC, Prisma ORM, and AAD',
 }
 
-
 // MSAL configuration
 const msalConfig: Configuration = {
   auth: {
