@@ -34,12 +34,6 @@ export async function getSecret(name: string) {
     });
 
     console.log("Getting secret...");
-    console.log("process.env.UMI_CLIENT_ID: ", process.env.UMI_CLIENT_ID);
-    console.log("process.env.SECRET_VAULT_NAME: ", process.env.SECRET_VAULT_NAME);
-    console.log("process.env.SECRET_NAME: ", process.env.SECRET_NAME);
-    console.log("process.env.AZURE_TENANT_ID: ", process.env.AZURE_TENANT_ID);
-    console.log("process.env.AZURE_CLIENT_ID: ", process.env.AZURE_CLIENT_ID);
-    console.log("process.env.AZURE_CLIENT_SECRET: ", process.env.AZURE_CLIENT_SECRET);
 
 
     const secret = await client.getSecret(name);

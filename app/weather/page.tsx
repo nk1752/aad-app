@@ -9,7 +9,7 @@ async function getData(formData: FormData) {
   "use server";
 
   const apiKey = await getSecret("w-api-key") as String;
- console.log(apiKey);
+  //console.log(apiKey);
 
   const city = formData.get("city") as String; 
 
