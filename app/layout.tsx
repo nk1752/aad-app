@@ -14,7 +14,7 @@ const metadata: Metadata = {
   description: 'RSC, Prisma ORM, and AAD',
 }
 
-// MSAL configuration
+// MSAL configuration for AuthNZ App 
 const msalConfig: Configuration = {
   auth: {
     clientId: 'ddec4f98-52aa-40b2-801e-31531e319288',
