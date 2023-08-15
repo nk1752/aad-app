@@ -55,7 +55,7 @@ jobs:
           echo DATABASE_URL=sqlserver://vhpocdqlsrv.database.windows.net:1433;
                   database=userdb; >> .env.production.local
                   user=vhadmin@vhpocdqlsrv; >> .env.production.local
-                  password${{secrets.DB_PWD}} >> .env.production.local
+                  password=${{secrets.DB_PWD}} >> .env.production.local
                   encrypt=true;trustServerCertificate=false; >> .env.production.local
                   hostNameInCertificate=*.database.windows.net;loginTimeout=30;  >> .env.production.local
           
