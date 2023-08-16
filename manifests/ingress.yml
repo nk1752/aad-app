@@ -17,17 +17,17 @@ metadata:
     appgw.ingress.kubernetes.io/health-probe-port: "3000"
 
     # ssl redirect
-    # appgw.ingress.kubernetes.io/ssl-redirect: "true"
+    appgw.ingress.kubernetes.io/ssl-redirect: "true"
     # ssl certificate
     # appgw.ingress.kubernetes.io/appgw-ssl-certificate: "gs-cert-1"
-    
-    # appgw.ingress.kubernetes.io/rewrite-rule-set: "redirect-to-https"
-    # appgw.ingress.kubernetes.io/rewrite-rule-redirect-type: "Permanent"
-    # appgw.ingress.kubernetes.io/rewrite-rule-redirect-protocol: "HttpsOnly"
 
     # appgw.ingress.kubernetes.io/backend-path-prefix: "/"
 
 spec:
+  tls:
+    - hosts:
+      - pocvivahealth.com
+      secretName: gs-cert-2
   rules:
   - host: pocvivahealth.com
     http:

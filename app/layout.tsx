@@ -9,19 +9,15 @@ import Topbar from './components/topbar'
 import LoginSplash from './components/loginSplash'
 import { getSecret } from "@/utils/azKeyVault";
 
+import { msalConfig } from '@/authN/authConfig'
+
 const metadata: Metadata = {
   title: 'RSC | AAD | Prisma',
   description: 'RSC, Prisma ORM, and AAD',
 }
 
-// MSAL configuration for AuthNZ App 
-const msalConfig: Configuration = {
-  auth: {
-    clientId: 'ddec4f98-52aa-40b2-801e-31531e319288',
-    authority: 'https://login.microsoftonline.com/7cb752a7-6dfd-429e-adc9-129f0ea3fcec',
-    redirectUri: '/',
-  },
-};
+
+
 
 // MSAL instance
 const pca = new PublicClientApplication(msalConfig);
