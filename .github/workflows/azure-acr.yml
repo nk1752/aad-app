@@ -1,1 +1,87 @@
+name: Build and Push image to acr
 
+on:
+  workflow_dispatch:
+
+env:
+  ACR_RESOURCE_GROUP: aad-rg
+  AZURE_CONTAINER_REGISTRY: vhacr1
+  CLUSTER_NAME: aad-cluster
+  CLUSTER_RESOURCE_GROUP: aad-rg
+  RESOURCE_GROUP: aad-rg
+  CONTAINER_NAME: aad-app
+  CONTAINER_TAG: ${{ github.sha }}
+  NAMESPACE: aad-app
+  NODE_ENV: production
+  PLATFORM: aks
+  SQLSERVER: "sqlserver://vhpocdqlsrv.database.windows.net:1433;"
+  DB: "database=userdb;"
+  USER: "user=vhadmin@vhpocdqlsrv;"
+  NK: "password=${{secrets.DB_PWD}};"
+  ENCRYPT: "encrypt=true;"
+  SERVER_CERT: "trustServerCertificate=false;"
+  HOST_CERT: "hostNameInCertificate=*.database.windows.net;"
+  LOGIN_TIMEOUT: "loginTimeout=30;"
+  DATABASE_URL: $SQLSERVER $DB$USER$PWD$ENCRYPT$SERVER_CERT$HOST_CERT$LOGIN_TIMEOUT
+
+jobs:
+
+  github_variables:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: github.sha
+        run: echo `github SHA >>> ${{ github.sha }}`
+      - name: github.env
+        run: echo `github env >>> ${{ github.env }}`
+      - name: ${{github.run_number}}
+        run: echo `run number >>> ${{ github.run_number }}`
+      - name: ${{github.run_id}}
+        run: echo `run id >>> ${{github.run_id}}`
+
+  buildImage:
+
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-latest
+    
+    needs: [github_variables]
+    
+    steps:
+      # Checks out the repository this file is in
+      - uses: actions/checkout@v3
+
+      - name: Build env file
+        run: |
+          touch .env.production.local
+          echo AZURE_TENANT_ID=${{secrets.AZURE_TENANT_ID}} >> .env.production.local
+          echo AZURE_CLIENT_ID=${{secrets.AZURE_CLIENT_ID}} >> .env.production.local
+          echo AZURE_CLIENT_SECRET=${{secrets.AZURE_CLIENT_SECRET}} >> .env.production.local
+          echo SECRET_VAULT_NAME=${{secrets.SECRET_VAULT_NAME}} >> .env.production.local
+          echo UMI_CLIENT_ID=${{secrets.UMI_CLIENT_ID}} >> .env.production.local
+          echo DATABASE_URL="$SQLSERVER$DB$USER$NK$ENCRYPT$SERVER_CERT$HOST_CERT$LOGIN_TIMEOUT" >> .env.production.local
+
+
+          
+          
+      - name: directory listing
+        run: ls -la
+
+      # Logs in with your Azure credentials
+      - name: Azure login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.ACTIONS_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      # Builds and pushes an image up to your Azure Container Registry
+      - name: Build and push image to ACR
+        run: |
+          az acr build \
+          --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }} \
+          --registry ${{ env.AZURE_CONTAINER_REGISTRY }} \
+          -g ${{ env.RESOURCE_GROUP }} \
+          -f ./dockerfiles/Dockerfile.prisma .
+          
