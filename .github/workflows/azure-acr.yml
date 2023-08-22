@@ -63,11 +63,6 @@ jobs:
           echo DATABASE_URL="$SQLSERVER$DB$USER$NK$ENCRYPT$SERVER_CERT$HOST_CERT$LOGIN_TIMEOUT" >> .env.production.local
 
 
-          
-          
-      - name: directory listing
-        run: ls -la
-
       # Logs in with your Azure credentials
       - name: Azure login
         uses: azure/login@v1
