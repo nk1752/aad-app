@@ -28,3 +28,15 @@ docker run -p 3000:3000 aad-app
 
 az account list
 az account clear //logout all users
+
+
+helm upgrade -i helm-delegate --namespace harness-delegate-ng --create-namespace \
+  harness-delegate/harness-delegate-ng \
+  --set delegateName=helm-delegate \
+  --set accountId=xovDi0YBTkiRL1u4XbuGdg \
+  --set delegateToken=NjhkZmU2ZTA0YjMxNTJjZjZhZTg1MGZlNmRkZjdlYTE= \
+  --set managerEndpoint=https://app.harness.io \
+  --set delegateDockerImage=harness/delegate:23.08.80308 \
+  --set replicas=1 --set upgrader.enabled=false
+
+  helm upgrade -i helm-delegate --namespace harness-delegate-ng --create-namespace harness-delegate/harness-delegate-ng
