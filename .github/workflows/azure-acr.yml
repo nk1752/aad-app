@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 env:
-  ACR_RESOURCE_GROUP: alb-cluster-rg
-  AZURE_CONTAINER_REGISTRY: vhacr1
+  ACR_RESOURCE_GROUP: poc-rg
+  AZURE_CONTAINER_REGISTRY: vhacr
   CLUSTER_NAME: alb-cluster
   CLUSTER_RESOURCE_GROUP: alb-cluster-rg
   RESOURCE_GROUP: alb-cluster-rg
