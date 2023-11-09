@@ -4,12 +4,13 @@ on:
   workflow_dispatch:
 
 env:
-  ACR_RESOURCE_GROUP: poc-rg
-  AZURE_CONTAINER_REGISTRY: vhacr
+  ACR_RG: poc-rg
+  ACR: vhacr
   CLUSTER_NAME: alb-cluster
-  CLUSTER_RESOURCE_GROUP: alb-cluster-rg
-  RESOURCE_GROUP: alb-cluster-rg
+  CLUSTER_RG: alb-cluster-rg
+  
   CONTAINER_NAME: aad-app
+
   CONTAINER_TAG: ${{ github.sha }}
   NAMESPACE: aad-app
   NODE_ENV: production
@@ -75,8 +76,8 @@ jobs:
       - name: Build and push image to ACR
         run: |
           az acr build \
-          --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }} \
-          --registry ${{ env.AZURE_CONTAINER_REGISTRY }} \
-          -g ${{ env.RESOURCE_GROUP }} \
+          --image ${{ env.ACR }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }} \
+          --registry ${{ env.ACR }} \
+          -g ${{ env.ACR_RG }} \
           -f ./dockerfiles/Dockerfile.prisma .
           
