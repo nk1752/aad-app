@@ -11,7 +11,8 @@ env:
   
   CONTAINER_NAME: prisma
 
-  CONTAINER_TAG: ${{ github.sha }}
+  # CONTAINER_TAG: ${{ github.sha }}
+  CONTAINER_TAG: latest 
   NAMESPACE: aad-app
   NODE_ENV: production
   PLATFORM: aks
