@@ -9,7 +9,7 @@ env:
   CLUSTER_NAME: agfc-cluster
   CLUSTER_RG: agfc-cluster-rg
   
-  CONTAINER_NAME: aad-app
+  CONTAINER_NAME: prisma
 
   CONTAINER_TAG: ${{ github.sha }}
   NAMESPACE: aad-app
