@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 env:
-  ACR_RG: agfc-rg
-  ACR: vhacr1
+  ACR_RG: poc-rg
+  ACR: vhacr
   CLUSTER_NAME: agfc-cluster
   CLUSTER_RG: agfc-cluster-rg
   
@@ -13,7 +13,7 @@ env:
 
   # CONTAINER_TAG: ${{ github.sha }}
   CONTAINER_TAG: latest 
-  NAMESPACE: aad-app
+  NAMESPACE: poc-infra
   NODE_ENV: production
   PLATFORM: aks
   SQLSERVER: "sqlserver://vhpocdqlsrv.database.windows.net:1433;"
