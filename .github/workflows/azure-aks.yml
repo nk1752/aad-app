@@ -13,7 +13,7 @@ env:
 
   CONTAINER_TAG: ${{ github.sha }}
   # CONTAINER_TAG: latest 
-  NAMESPACE: poc-infra
+  DEPLOY_NS: prisma-ns
   NODE_ENV: production
   PLATFORM: aks
   SQLSERVER: "sqlserver://vhpocdqlsrv.database.windows.net:1433;"
@@ -127,7 +127,7 @@ jobs:
         uses: Azure/k8s-deploy@v4
         with:
           resource-group: ${{ env.CLUSTER_RG }}
-          namespace: ${{ env.NAMESPACE }}
+          namespace: ${{ env.DEPLOY_NS }}
           action: deploy
           strategy: basic
           manifests: |
