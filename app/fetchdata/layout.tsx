@@ -11,7 +11,7 @@ export default function DataLayout({
               <Sidebar />
           </div>
   
-          <div className="w-11/12 bg-gradient-to-r from-gray-900 to-gray-700 text-stone-100 ">
+          <div className="w-11/12 bg-gradient-to-r from-green-900 to-gray-700 text-stone-100 ">
                   { children }
           </div> 
       </main>
