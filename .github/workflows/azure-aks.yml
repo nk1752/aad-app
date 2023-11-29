@@ -4,14 +4,16 @@ on:
   workflow_dispatch:
 
 env:
-  ACR_RESOURCE_GROUP: albc-rg
-  AZURE_CONTAINER_REGISTRY: vhacr1
-  CLUSTER_NAME: albc-cluster
-  CLUSTER_RESOURCE_GROUP: albc-rg
-  RESOURCE_GROUP: albc-rg
-  CONTAINER_NAME: aad-app
+  ACR_RG: poc-rg
+  ACR: vhacr
+  CLUSTER_NAME: agfc-cluster
+  CLUSTER_RG: agfc-cluster-rg
+  
+  CONTAINER_NAME: prisma
+
   CONTAINER_TAG: ${{ github.sha }}
-  NAMESPACE: aad-app
+  # CONTAINER_TAG: latest 
+  NAMESPACE: poc-infra
   NODE_ENV: production
   PLATFORM: aks
   SQLSERVER: "sqlserver://vhpocdqlsrv.database.windows.net:1433;"
@@ -25,8 +27,6 @@ env:
   DATABASE_URL: $SQLSERVER $DB$USER$PWD$ENCRYPT$SERVER_CERT$HOST_CERT$LOGIN_TIMEOUT
 
 
-
-
 jobs:
 
   github_variables:
@@ -34,13 +34,13 @@ jobs:
 
     steps:
       - name: github.sha
-        run: echo `github SHA >>> ${{ github.sha }}`
+        run: echo `github SHA -> ${{ github.sha }}`
       - name: github.env
         run: echo `github env >>> ${{ github.env }}`
-      - name: ${{github.run_number}}
+      - name: github.run_number
         run: echo `run number >>> ${{ github.run_number }}`
-      - name: ${{github.run_id}}
-        run: echo `run id >>> ${{github.run_id}}`
+      - name: github.run_id
+        run: echo `run id >>> ${{ github.run_id }}`
 
   buildImage:
 
@@ -65,9 +65,7 @@ jobs:
           echo UMI_CLIENT_ID=${{secrets.UMI_CLIENT_ID}} >> .env.production.local
           echo DATABASE_URL="$SQLSERVER$DB$USER$NK$ENCRYPT$SERVER_CERT$HOST_CERT$LOGIN_TIMEOUT" >> .env.production.local
 
-
-          
-          
+    
       - name: directory listing
         run: ls -la
 
@@ -83,9 +81,9 @@ jobs:
       - name: Build and push image to ACR
         run: |
           az acr build \
-          --image ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }} \
-          --registry ${{ env.AZURE_CONTAINER_REGISTRY }} \
-          -g ${{ env.RESOURCE_GROUP }} \
+          --image ${{ env.ACR }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }} \
+          --registry ${{ env.ACR }} \
+          -g ${{ env.ACR_RG }} \
           -f ./dockerfiles/Dockerfile.prisma .
           
 
@@ -119,7 +117,7 @@ jobs:
       - name: Get K8s context
         uses: azure/aks-set-context@v3
         with:
-          resource-group: ${{ env.RESOURCE_GROUP }}
+          resource-group: ${{ env.CLUSTER_RG }}
           cluster-name: ${{ env.CLUSTER_NAME }}
           admin: 'false'
           use-kubelogin: 'true'
@@ -128,19 +126,19 @@ jobs:
       - name: Deploys application
         uses: Azure/k8s-deploy@v4
         with:
-          resource-group: ${{ env.RESOURCE_GROUP }}
+          resource-group: ${{ env.CLUSTER_RG }}
           namespace: ${{ env.NAMESPACE }}
           action: deploy
           strategy: basic
           manifests: |
             manifests/deployment.yml
             manifests/service.yml
-            manifests/ingress.yml
+            manifests/route.yml
             
         
           images: |
-            ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }}
+            ${{ env.ACR }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }}
 
-      - name: update image tag
+      - name: get pods
         run: |
-          kubectl get pods -A
+          kubectl get po -A

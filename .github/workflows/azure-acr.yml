@@ -33,7 +33,7 @@ jobs:
 
     steps:
       - name: github.sha
-        run: echo `github SHA >>> ${{ github.sha }}`
+        run: echo `github SHA -> ${{ github.sha }}`
       - name: github.env
         run: echo `github env >>> ${{ github.env }}`
       - name: github.run_number
