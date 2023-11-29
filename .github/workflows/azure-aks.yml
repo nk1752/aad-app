@@ -7,7 +7,7 @@ env:
   ACR_RG: poc-rg
   ACR: vhacr
   CLUSTER_NAME: agfc-cluster
-  CLUSTER_RG: agfc-cluster-rg
+  CLUSTER_RG: agfc-rg
   
   CONTAINER_NAME: prisma
 
