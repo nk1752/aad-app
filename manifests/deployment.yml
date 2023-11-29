@@ -2,8 +2,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: aad-app-deployment
-  namespace: aad-app
+  name: prisma-deployment
+  namespace: prisma-ns
   labels:
     app: prisma
 spec:

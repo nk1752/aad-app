@@ -131,10 +131,7 @@ jobs:
           action: deploy
           strategy: basic
           manifests: |
-            manifests/deployment.yml
-            manifests/service.yml
-            manifests/route.yml
-            
+            manifests/deployment.yml   
         
           images: |
             ${{ env.ACR }}.azurecr.io/${{ env.CONTAINER_NAME }}:${{ env.CONTAINER_TAG }}
