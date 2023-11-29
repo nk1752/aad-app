@@ -11,8 +11,8 @@ env:
   
   CONTAINER_NAME: prisma
 
-  # CONTAINER_TAG: ${{ github.sha }}
-  CONTAINER_TAG: latest 
+  CONTAINER_TAG: ${{ github.sha }}
+  # CONTAINER_TAG: latest 
   NAMESPACE: poc-infra
   NODE_ENV: production
   PLATFORM: aks
