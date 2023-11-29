@@ -36,9 +36,9 @@ jobs:
       - name: github.sha
         run: echo `github SHA -> ${{ github.sha }}`
       - name: github.env
-        run: echo `github env >>> ${{ github.env }}`
+        run: echo `github env -> ${{ github.env }}`
       - name: github.run_number
-        run: echo `run number >>> ${{ github.run_number }}`
+        run: echo `run number -> ${{ github.run_number }}`
       - name: github.run_id
         run: echo `run id >>> ${{ github.run_id }}`
 
