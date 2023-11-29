@@ -40,7 +40,7 @@ jobs:
       - name: github.run_number
         run: echo `run number -> ${{ github.run_number }}`
       - name: github.run_id
-        run: echo `run id >>> ${{ github.run_id }}`
+        run: echo `run id -> ${{ github.run_id }}`
 
   buildImage:
 
