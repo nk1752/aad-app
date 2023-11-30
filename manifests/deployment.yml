@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: prisma-dev
-  namespace: prisma-ns
+  namespace: prisma-dev-ns
   labels:
     app: prisma
 spec:
