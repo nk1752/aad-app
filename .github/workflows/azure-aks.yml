@@ -13,7 +13,7 @@ env:
 
   CONTAINER_TAG: v0.1.0
   # CONTAINER_TAG: latest 
-  DEPLOY_NS: prisma-ns
+  DEPLOY_NS: prisma-prod-ns
   NODE_ENV: production
   PLATFORM: aks
   SQLSERVER: "sqlserver://vhpocdqlsrv.database.windows.net:1433;"

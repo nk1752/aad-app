@@ -3,11 +3,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: prisma-prod
-  namespace: prisma-ns
+  namespace: prisma-prod-ns
   labels:
     app: prisma
 spec:
-    replicas: 2
+    replicas: 1
     selector:
       matchLabels:
         app: prisma
