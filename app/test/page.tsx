@@ -10,7 +10,7 @@ async function getData(formData: FormData) {
     //const url = formData.get("url") as string;
     //furl = url;
     const url = "api-svc.rest-api-ns.svc.cluster.local:8080/api/add?num1=1&num2=2";
-    furl = url;
+    //furl = url;
     const res = await fetch(url, {
         method: "GET",
         mode: "cors",
@@ -62,8 +62,8 @@ export default function Page() {
         </div>
 
         <div >
-            fetch url: {furl} <br />
-            response: {response}
+            fetch url: "later" <br />
+            response: "later"
         </div>
         
       </main>
