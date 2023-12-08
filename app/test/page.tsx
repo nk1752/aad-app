@@ -9,6 +9,25 @@ async function getData(formData: FormData) {
     // <service-name>.<namespace>.svc.cluster.local:<service-port>
     const testurl = formData.get("url") as string;
     furl = testurl;
+    const url = testurl;
+    const res = await fetch(url, {
+        method: "GET",
+        mode: "cors",
+        next: {
+            revalidate: 0,
+        },
+        headers: {
+            "Content-Type": "text/plain",
+        },
+    });
+
+    // Recommendation: handle errors
+    if (!res.ok) {
+        // This will activate the closest `error.js` Error Boundary
+        throw new Error("Failed to fetch data");
+    }
+
+    const obj = await res.text();
     
 
     revalidatePath("/test");
