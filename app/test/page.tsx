@@ -28,7 +28,7 @@ async function getData(formData: FormData) {
 
     const obj = await res.json();
     //console.log(obj);
-    response = JSON.stringify(obj);
+    //response = JSON.stringify(obj);
 
     revalidatePath("/test");
 }
