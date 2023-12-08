@@ -6,9 +6,11 @@ let response: string = "";
 async function getData(formData: FormData) {
     "use server";
 
-    const url = formData.get("url") as string;
+    // <service-name>.<namespace>.svc.cluster.local:<service-port>
+    //const url = formData.get("url") as string;
+    //furl = url;
+    const url = "api-svc.rest-api-ns.svc.cluster.local:8080/api/add?num1=1&num2=2";
     furl = url;
-
     const res = await fetch(url, {
         method: "GET",
         mode: "cors",
