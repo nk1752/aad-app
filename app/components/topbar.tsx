@@ -14,7 +14,7 @@ export default function Topbar() {
             </div>
             <div className={"flex flex-row w-10/12 gap-8 place-items-center justify-center text-lg" }>
                 <Link href="/">Home</Link>
-                <Link href="../auth">Auth</Link>
+                <Link href="../test">Test</Link>
                 <Link href="../fetchdata">User Data</Link>
                 <Link href="../weather">Weather</Link>
             </div>
