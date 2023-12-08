@@ -9,7 +9,8 @@ async function getData(formData: FormData) {
     // <service-name>.<namespace>.svc.cluster.local:<service-port>
     //const url = formData.get("url") as string;
     //furl = url;
-    const url = "api-svc.rest-api-ns.svc.cluster.local:8080/api/add?num1=1&num2=2";
+    const url = 
+        "api-svc.rest-api-ns.svc.cluster.local:8080/health" ;
     //furl = url;
     const res = await fetch(url, {
         method: "GET",
@@ -18,7 +19,8 @@ async function getData(formData: FormData) {
             revalidate: 0,
         },
         headers: {
-            "Content-Type": "application/json",
+            //"Content-Type": "application/json",
+            "Content-Type": "text/plain",
         },
     });
 
@@ -28,7 +30,7 @@ async function getData(formData: FormData) {
         throw new Error("Failed to fetch data");
     }
 
-    const obj = await res.json();
+    //const obj = await res.json();
     //console.log(obj);
     //response = JSON.stringify(obj);
 
@@ -61,10 +63,7 @@ export default function Page() {
           </form>
         </div>
 
-        <div >
-            fetch url: "later" <br />
-            response: "later"
-        </div>
+        
         
       </main>
     );
