@@ -7,8 +7,8 @@ async function getData(formData: FormData) {
     "use server";
 
     // <service-name>.<namespace>.svc.cluster.local:<service-port>
-    //const url = formData.get("url") as string;
-    //furl = url;
+    const testurl = formData.get("url") as string;
+    furl = testurl;
     const url = 
         "api-svc.rest-api-ns.svc.cluster.local:8080/health" ;
     //furl = url;
@@ -62,6 +62,11 @@ export default function Page() {
 
           </form>
         </div>
+
+        <div>
+            number: 1
+        </div>
+        
 
         
         

@@ -1,6 +1,9 @@
 name: Build and deploy aad-app to AKS
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 env:
