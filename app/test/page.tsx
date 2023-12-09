@@ -7,6 +7,8 @@ async function getData(formData: FormData) {
     "use server";
 
     // <service-name>.<namespace>.svc.cluster.local:<service-port>
+    // api-svc.restapi.svc.cluster.local:8080/health
+    // api-svc.restapi.svc.agfc-cluster:8080/health
     const testurl = formData.get("url") as string;
     furl = testurl;
     const url = testurl;

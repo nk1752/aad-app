@@ -9,4 +9,8 @@ az aks show --resource-group alb-cluster-rg \
     --query servicePrincipalProfile.clientId \
     --output tsv
 
-    az role assignment list --scope /subscriptions/<subscriptionID>/resourceGroups/<resourcegroupname>/providers/Microsoft.ContainerRegistry/registries/<acrname> -o table
+az role assignment list --scope /subscriptions/<subscriptionID>/resourceGroups/<resourcegroupname>/providers/Microsoft.ContainerRegistry/registries/<acrname> -o table
+
+<service-name>.<namespace>.svc.cluster.local:<service-port>
+<service-name>.<namespace>:<service-port>
+k exec -it pod-name -n pod-namespace sh
