@@ -8,7 +8,7 @@ async function getData(formData: FormData) {
 
     // <service-name>.<namespace>.svc.cluster.local:<service-port>
     // api-svc.restapi.svc.cluster.local:8080/health
-    // api-svc.restapi.svc.agfc-cluster:8080/health
+    // http://api-svc:8080/health
     const testurl = formData.get("url") as string;
     furl = testurl;
     const url = testurl;
@@ -30,6 +30,8 @@ async function getData(formData: FormData) {
     }
 
     const obj = await res.text();
+    console.log(obj);
+    response = obj;
     
 
     revalidatePath("/test");
@@ -64,6 +66,7 @@ export default function Page() {
         <div>
             number: 1 <br/>
             url: {furl} <br/>
+            response: {response}
         </div>
         
 
